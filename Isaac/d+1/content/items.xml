@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" deathanm2="gfx/death items.anm2" version="1">
+    <active maxcharges="6" chargetype="normal" id="1" name="D+1" gfx="Dp1.png" description="+1" quality="4" tags="nocantrip offensive"/>
+</items>

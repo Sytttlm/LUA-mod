@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>greed_chance</name>
+    <directory>greed_chance</directory>
+    <id>3781483233</id>
+    <description>The following content has been translated by AI.
+
+
+    Displays the Greed chance in the bottom-left corner.
+    The icon without a clock shows the current floor's chance; the icon with a clock shows the next floor's chance.
+
+This mod has attempted to provide compatibility with the Planetarium Chance Mod. If the UI still overlaps, you can manually enable the 'Move down one line' option in the mod config menu
+  The UI positioning code is borrowed from the Planetarium Chance mod, with the author's authorization obtained on Reddit. Huge thanks to the Planetarium Chance [REP+] mod author!
+
+
+  &quot;Greed&quot; here refers to Greed / Super Greed that can replace the Shop or Secret Room as a surprise mini-boss room. The ones that spawn from bombing a shopkeeper, or that appear as regular enemies, do not count.
+
+  Since the official API provides no way to read the Greed chance, all chances in this mod are calculated using empirical formulas.
+
+  Chance calculation under normal conditions (data from the wiki):
+  1. Base chance: 1/3 (33.3%)
+  2. Having more than 20 coins when entering the next floor: +1/60 (+1.7%)
+  3. Destroyed a Donation Machine: +1/30 (+3.3%)
+  4. Destroyed a Shopkeeper: +1/150 (+0.7%)
+  5. Donating to the Donation Machine: −1/60 (−1.7%) per coin, reaching its maximum after 5 coins, for a total of −1/12
+  (−8.3%)
+
+  The minimum and maximum chances are 25.0% and 39.0% respectively.
+
+  Mod Config Menu options:
+  General:
+  1. Whether to show the current floor's chance
+  2. Whether to show the next floor's chance
+  3.Whether to moved down by one row
+  For testing:
+  1. Whether to show the current floor's Greed count and location (Shop on top, Secret Room below; located beneath the chance numbers in the bottom-left corner — may be covered by trinkets)
+  2. Whether to enable Rainbow Glasses (gives Isaac translucent rainbow-tinted glasses, just for fun; only displays correctly in small rooms, will be misaligned in other rooms)
+  3.Whether to correct the color difference in the text
+
+If you encounter any bugs, please kindly provide the following information when reporting:
+1.Your game version
+2.Steps to reproduce the bug
+3.Any console output or error messages
+Without these details, I may not be able to reproduce the issue locally, which makes it nearly impossible to identify and fix the problem. Your cooperation is greatly appreciated!
+
+  Authors: 武珞 (Wu Luo) — code; Lonely night — art</description>
+    <version>1.0.7</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Tweaks"/>
+    <tag id="Graphics"/>
+</metadata>

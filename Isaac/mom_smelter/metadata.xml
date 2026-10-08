@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>mom'smelter</name>
+    <directory>mom_smelter</directory>
+    <id>3779272872</id>
+    <description>Translation by AI
+
+One-sentence：When no trinket is equipped, the Furnace will spit one out.
+
+When there is no trinket in the bottom-left trinket slot and the player is not holding a trinket above their head, using the Smelter will spawn a trinket (the spawning effect is identical to that of Mom's Box).
+
+Conversely, if there is a trinket in the bottom-left trinket slot or the player is holding a trinket above their head, using the Smelter will consume the trinket (the original Smelter effect remains intact).
+
+Note: The judgment only checks the bottom-left trinket slot and the trinket currently being held above the player's head. Trinkets that have already been consumed do not affect this logic.
+
+Authors: 武珞(Code), Lonely night (Art)</description>
+    <version>1.0.1</version>
+    <visibility>Public</visibility>
+    <tag id="Active Items"/>
+    <tag id="Trinkets"/>
+    <tag id="Tweaks"/>
+</metadata>

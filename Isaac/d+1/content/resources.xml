@@ -1,0 +1,8 @@
+    <resources>
+            <!-- 注册动画文件 -->
+        <resource path="resources/gfx/myEffect/ywdf.anm2"/>
+        <resource path="resources/gfx/myEffect/ywdf.png"/>
+        <resource path="resources/gfx/myEffect/bztx.anm2"/>
+        <resource path="resources/gfx/myEffect/bztx.png"/>
+
+    </resources>

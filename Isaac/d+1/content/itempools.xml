@@ -1,0 +1,21 @@
+<ItemPools>
+    <Pool name="treasure">
+        <Item Id="1" Weight="0.1" DecreaseBy="0.1" RemoveOn="0.01"/>
+    </Pool>
+
+    <Pool name="secret">
+        <Item Id="1" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
+
+    <Pool name="greedShop">
+        <Item Id="1" Weight="0.1" DecreaseBy="0.1" RemoveOn="0.01"/>
+    </Pool>
+
+    <Pool name="greedSecret">
+        <Item Id="1" Weight="1" DecreaseBy="1" RemoveOn="0.1"/>
+    </Pool>
+
+    <Pool name="craneGame">
+        <Item Id="1" Weight="1" DecreaseBy="0.1" RemoveOn="0.1"/>
+    </Pool>
+</ItemPools>

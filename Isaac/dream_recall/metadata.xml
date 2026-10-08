@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>dream_recall</name>
+    <directory>dream_recall</directory>
+    <id>3803117959</id>
+    <description>While Isaac has Dream Catcher, the names of the items it revealed are shown in
+the starting room after descending to a new floor. They disappear once the
+player leaves the starting room.
+!! REQUIRES External Item Descriptions (EID) as a dependency.
+
+Special cases:
+1. Glitched items are not shown.
+2. If there are no items in the Treasure Room, nothing is shown.
+
+Mod Config Menu option:
+(This feature requires subscribing to:
+https://steamcommunity.com/sharedfiles/filedetails/?id=3701683951)
+1.Always show in the starting room
+  (if off, the names are shown only on the first entry to the starting room)</description>
+    <version>1.2</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Tweaks"/>
+    <tag id="Graphics"/>
+</metadata>
