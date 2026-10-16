@@ -18,6 +18,7 @@ EID:addCollectible(Dp1, "将房间中所有道具重置为内部ID加1的道具"
 local itemConfig = Isaac.GetItemConfig()
 local idOfSadOnion = 1 --悲伤洋葱的id是1
 local game = Game()
+--跳过处，其中：59彼列之书（被动道具形式），656达摩克里斯之剑（被动道具形式），714召回，715保留。其余为断点
 local SKIP_IDS = {
     [42] = 44,   [58] = 60,   [60] = 62,   [234] = 236,
     [586] = 588, [612] = 614, [619] = 621, [629] = 631,
@@ -46,28 +47,81 @@ local function idPlus1(initialid) --d+1,顺便跳过不对劲的东西
     return TargetId
 end
 
- local function IdRealPlus1(initialid)
-    local TargetId =  maxToMin(idPlus1(initialid))
+--判断是否因为标签的原因被禁止。返回true则被禁止，返回false则没被禁止
+local function isBlockedByTags(cfg)
+    if cfg == nil or cfg.Tags == nil then return false end  --防nil
 
-    --在贪婪模式中，标签“非贪婪模式”的道具会被跳过
-    if game:IsGreedMode() then  --判断是否处于贪婪模式
-        if itemConfig:GetCollectible(TargetId):HasTags(ItemConfig.TAG_NO_GREED) then --判断是否含有非贪婪标签
-            TargetId = idPlus1(TargetId) -- 递归
-        end
+    ----在贪婪模式中，标签“非贪婪模式”的道具会被跳过
+    if game:IsGreedMode() and cfg:HasTags(ItemConfig.TAG_NO_GREED) then
+        return true
     end
     --在挑战中，标签“非挑战”的道具会被跳过。
-    if  game.Challenge ~= 0 then --判断是否处于挑战模式
-        if itemConfig:GetCollectible(TargetId):HasTags(ItemConfig.TAG_NO_CHALLENGE) then --判断是否含有非挑战标签
-            TargetId = idPlus1(TargetId) -- 递归
-        end
+    if game.Challenge ~= 0 and cfg:HasTags(ItemConfig.TAG_NO_CHALLENGE) then
+        return true
     end
-    --未解锁的道具会根据配置选择是否被跳过
-    if not itemConfig:GetCollectible(TargetId):IsAvailable() and EID.Config["SpindownDiceSkipLocked"] then
-        TargetId = idPlus1(TargetId) -- 递归
-    end
-    return TargetId
+
+    return false
 end
 
+--判断是否为两个特殊角色：里罗、长子权表罗
+local function isSpecialRole()
+    for i = 0, Game():GetNumPlayers() - 1 do  --遍历房间所有角色
+        local player = Isaac.GetPlayer(i)
+        local playerType = player:GetPlayerType()
+        if playerType == PlayerType.PLAYER_THELOST_B then  -- 31里罗
+            return true
+        elseif playerType == PlayerType.PLAYER_THELOST then  -- 10表罗，需要判断是否持有长子权
+            if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+--判断道具是否解锁，不全用IsAvailable是因为它同时会判断是否被标签禁用。
+--涉及到的角色有里罗、长子权表罗，这两人若不加忏悔龙，仅可判断是否默认解锁。
+--其实还有表店里店，但是他俩只禁一磅肉，而且拿了之后没有任何效果，就不管了
+--为真表示已解锁，为假表示未解锁
+local function isUnlocked(cfg)
+    if cfg == nil then return false end  --防nil
+    if cfg.AchievementID == -1 then  --道具对应成就id为-1说明是无需解锁，一来就有
+        return true
+    elseif isSpecialRole() then  --若道具需要解锁，且为两种特殊情况
+        if REPENTOGON then  --若有忏悔龙就精准判断
+            return Isaac.GetPersistentGameData():Unlocked(cfg.AchievementID)
+        else  --没有忏悔龙，就让里罗和长子权表罗可以roll出未解锁道具和被移出道具池的道具
+            return true
+        end
+    end
+    return cfg:IsAvailable()
+end
+
+local function isUsableCollectible(initialid)
+    local cfg = itemConfig:GetCollectible(initialid)  --获取id对应的道具
+    if cfg == nil then return false end  --虽然后面正常处理的话这边不会出nil，但以防万一还是判一下
+
+    if isBlockedByTags(cfg) then return false end  --贪婪模式和挑战模式禁用的道具
+    if isUnlocked(cfg) == false then
+        if EID.Config["SpindownDiceSkipLocked"] then
+            return false
+        else
+            return true
+        end
+    end  --未解锁道具，并且eid的配置
+    return true
+end
+
+
+local function IdRealPlus1(initialid)
+    local targetId =  initialid
+    local maxSteps = 700  --递归循环的上限，防死循环
+    for _ = 1, maxSteps do
+        targetId = maxToMin(idPlus1(targetId))
+        if isUsableCollectible(targetId) then return targetId end
+    end
+    return targetId
+end
 ---------------------------------------------------------------------------------------------------------------------
 local mod = Da1
 
@@ -118,7 +172,7 @@ end
                         refID = spinupId(refID)
                     end
 				    EID:appendToDescription(descObj, "{{Collectible"..refID.."}}")
-				    if EID.itemUnlockStates[refID] == false then EID:appendToDescription(descObj, "?") end
+				    if not isUnlocked(itemConfig:GetCollectible(refID)) then EID:appendToDescription(descObj, "?") end
 				    if EID.Config["SpindownDiceDisplayID"] then --此处的true可以替换成配置选项的开启：是否开启id显示
 					    EID:appendToDescription(descObj, "/".. refID)
 				    end

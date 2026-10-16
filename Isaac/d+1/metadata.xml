@@ -3,8 +3,42 @@
     <name>D+1</name>
     <directory>d+1</directory>
     <id>3604699870</id>
-    <description>like D-1</description>
-    <version>1.4.1</version>
+    <description>(This entire text was translated by AI.)
+Adds a new active item. Its active effect is the opposite of Spindown Dice (the counting d20); all of its other properties are essentially the same as Spindown Dice's.
+
+Item Name: Spinup Dice
+Item Charge: 6 charges
+Item Quality: 4
+Item Description: Resets all items in the room to the item with the internal ID plus 1.
+Item Pools (same weights as Spindown Dice): Treasure Room, Secret Room, Claw Machine, Greed Mode Shop, Greed Mode Secret Room
+Effect: When used, resets all items in the room to the item with the internal ID plus 1.
+Tags: Offensive, Nocantrip
+
+EID support: 
+Configuring Spindown Dice in EID also configures Spinup Dice, keeping the two in sync. All relevant options are implemented: prediction length, predicted item ID, predicted item name, and whether to skip locked items in predictions.
+
+Mod Config Menu support: 
+General settings：
+1.Enable looping: whether D+1 can be used on the item with the highest ID, turning it into Sad Onion (ID 1) (default: on)
+2.Allow use on empty pedestals: whether an empty pedestal becomes Sad Onion (default: on)
+Smoke effect：
+1.Enable: master toggle for the smoke effect (default: off, i.e. the vanilla effect)
+2.Smoke effect: reversed or explosion (the explosion variant plays an explosion sound)
+
+Differences from Spindown Dice:
+1.If Repentogon is not enabled, Tainted Lost and Birthright Lost will roll locked items with D+1. The reason is that the vanilla API function itemConfig:GetCollectible():IsAvailable() cannot distinguish between an item being locked and an item being disabled because of a special character's item pool — the two cases are inseparable, so either special characters can roll both locked and disabled items, or they can roll neither. Since many of the disabled items are extremely valuable survival items for Tainted Lost, and vanilla D-1 can roll them too, this option was chosen. This mod supports Repentogon: once it is enabled, Repentogon's API is called to precisely identify locked items, making D+1 behave exactly like vanilla D-1.
+2.Keeper and Tainted Keeper cannot roll A Pound of Flesh, for the same reason as above. However, since A Pound of Flesh itself has no effect for Keeper or Tainted Keeper, enabling Repentogon will not make it rollable for them either.
+Properties shared with D-1 are not repeated here.
+
+Pending Tasks:
+1. Preview detailed information of the next item in EID by pressing Tab.
+
+Compatible Mods:
+Mod Configuration Menu, EID,Repentogon
+
+
+Authors: 武珞(code), Lonely Night (art)</description>
+    <version>1.4.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Active Items"/>
